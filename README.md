@@ -165,6 +165,8 @@ If haven’t added the ssh port - do it now
 
     sudo ufw allow 42424
 
+><details><summary>allow</summary>or <code>limit​</code> to set DOS protection</details>
+
 Enable
 
     sudo ufw enable
@@ -186,11 +188,12 @@ sudo lsof -i -P -n | grep LISTEN
 sudo netstat -tulpn | grep LISTEN
 ```
 > anything with 127.0.0.* is from a loopback interface, meaning there is no outside threat for those ports.
+><details><summary>loopback interface</summary>an internal interface that exists so that the machine can communicate with itself</details>
 
 Then:
 
     sudo ufw limit 42424/tcp
-
+><details><summary>42424</summary>my ssh custom port</details>
 ---
 Delete any duplicates or unnecessary ports using
 
@@ -207,7 +210,7 @@ Then, by selecting the number
 Enable logging
 
     sudo ufw logging medium
-
+><details><summary>logging</summary>Will log everything to <code>/var/log​</code> general logs <code>syslog.log​</code> and <code>kern.log​</code> and to ufw specific <code>ufw.log</code></details>
 Install Psad:
 
     sudo apt-get install psad
@@ -224,11 +227,11 @@ EMAIL_ADDRESSES root@localhost;
 HOSTNAME ubuntu;
 	
 ##Specify the home and external networks. 
-HOME_NET any; 
+HOME_NET any;     #or your ip
 EXTERNAL_NET any;
 
 ##By default, psad search for logs in /var/log/messages so change it to
-IPT_SYSLOG_FILE /var/log/ufw.log;
+IPT_SYSLOG_FILE /var/log/ufw.log;  #or /var/log/syslog for general log
 
 ALERTING_METHODS        noemail;
 ENABLE_AUTO_IDS         Y;
@@ -320,11 +323,13 @@ apt-get autoclean -y >> $ulog
 ### Set up root cron jobs ([CronHowTo](https://help.ubuntu.com/community/CronHowto))
 
     sudo crontab -e
+>* sudo crontab -l to list
+>* sudo crontab -r to remove
 
 Very important ! In the top of the cron file add:
 
     PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-
+><details><summary>PATH</summary>Copy here whatever is in ​​<code>sudo visudo​ - Defaults secure_path​</code> ​​because cron doesn’t  know the path especially for root cron jobs</details>
 Then add the jobs:
 
     0 4 * * 1 /home/dshults/update_script.sh
@@ -352,6 +357,7 @@ Configure as local mail. In case if need to reconfigure, run:
 ### Check mail:
 
     sudo mail
+>with <code>sudo</code> to check mail for root. Without sudo​ it checks mail for current user
 
 Delete all msgs for root (or replace * with a number to del specific msg):
 
@@ -379,11 +385,12 @@ then
 	sed -i "/^tmp=/s/.*/tmp=$original/" /home/dshults/notify_script.sh
 fi
 ```
+><details><summary>sed</summary>double quotes "" so that sed can interpolate (insert) values of $original and not the word itself</details>
 ### Add to root crontab
 
     sudo crontab -e
     @midnight /home/dshults/notify_script.sh
-
+><details><summary>@midnight</summary>or <code>@daily​</code> or <code>0 0 * * *</code></details>
 ---
 
 # For corrections
