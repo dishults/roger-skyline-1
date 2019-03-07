@@ -25,7 +25,7 @@ sudo reboot                   # if needed
 ## [Configuring Static IP Addresses On Ubuntu Servers](https://websiteforstudents.com/configure-static-ip-addresses-on-ubuntu-18-04-beta/)
 To be able to connect to your machine from mac’s terminal first **in your VirtualBox** - Ubuntu - Settings - Network - Bridged Adapter - Attached to - set the interface through which you’re connected to the Internet at the moment, mine is Wi-FI:
 
-[image_is_coming]
+![image](https://github.com/dishults/roger-skyline-1.5/blob/master/image_preview.png?raw=true)
 
 > PS. If you leave the **default Attached to NAT** you will be able to connect to your machine from mac’s terminal but only through loopback interface (127.0.0.1) not your static ip! And also for that to work you’d need to click **Advanced - Port Forwarding** and add in **Host Port** and in **Guest Port** your ```ssh port```.
 ---
