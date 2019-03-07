@@ -27,7 +27,7 @@ To be able to connect to your machine from mac’s terminal first **in your Virt
 
 ![image](https://github.com/dishults/roger-skyline-1.5/blob/master/image_preview.png?raw=true)
 
-> PS. If you leave the **default Attached to NAT** you will be able to connect to your machine from mac’s terminal but only through loopback interface (127.0.0.1) not your static ip! And also for that to work you’d need to click **Advanced - Port Forwarding** and add in **Host Port** and in **Guest Port** your ```ssh port```.
+> If you leave the **default Attached to NAT** you will be able to connect to your machine from mac’s terminal but only through loopback interface (127.0.0.1) not your static ip! And also for that to work you’d need to click **Advanced - Port Forwarding** and add in **Host Port** and in **Guest Port** your ```ssh port```.
 ---
 ### Continue on your machine.
 First, do:
