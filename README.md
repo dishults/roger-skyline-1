@@ -11,11 +11,10 @@ Please note:
 * Up to date with all the packages installed to meet the demands of this project.
 ## Install Ubuntu updates
 ```bash
-sudo apt-get update           # Fetches the list of available updates
-sudo apt-get upgrade -y       # Strictly upgrades the current packages
-sudo apt-get dist-upgrade -y  # Installs updates (new ones)
-sudo apt-get autoremove -y    # removes packages that were automatically installed to satisfy dependencies for some package and that are nomore needed.
-sudo apt-get autoclean -y     # clears out the local repository of retrieved package files. The difference is that it only removes package files that can no longer be downloaded, and are largely useless. This allows a cache to be maintained over a long period without it growing out of control.
+sudo apt update           # Fetches the list of available updates
+sudo apt full-upgrade	  # full-upgrade is used in preference to a simple upgrade, as it also picks up any dependency changes that may have been made
+sudo apt autoremove -y    # removes packages that were automatically installed to satisfy dependencies for some package and that are nomore needed.
+sudo apt autoclean -y     # clears out the local repository of retrieved package files. The difference is that it only removes package files that can no longer be downloaded, and are largely useless. This allows a cache to be maintained over a long period without it growing out of control.
 sudo reboot                   # if needed
     -y, --yes, --assume-yes
                Automatic yes to prompts;
@@ -69,7 +68,7 @@ sudo netplan --debug apply
 ```
 To check do:
 
-    sudo apt-get update   
+    sudo apt update   
 > if it works than my static ip is assigned correctly
 
 To make it permanent, follow the steps described in *50-cloud-init*. Write a file:
@@ -213,7 +212,7 @@ Enable logging
 ><details><summary>logging</summary>Will log everything to <code>/var/log​</code> general logs <code>syslog.log​</code> and <code>kern.log​</code> and to ufw specific <code>ufw.log</code></details>
 Install Psad:
 
-    sudo apt-get install psad
+    sudo apt install psad
 
 [Configure it](https://blog.rapid7.com/2017/06/24/how-to-install-and-use-psad-ids-on-ubuntu-linux/):
 
@@ -260,7 +259,7 @@ Check the current status
 ### Test it
 Install nmap (for tests)
 
-    sudo apt-get istall nmap
+    sudo apt istall nmap
 
 Then scan your port multiple times until you can't (normally after 4th):
 
@@ -309,16 +308,18 @@ With the following:
 
 ulog=/var/log/update_script.log
 date > $ulog
-echo -e "\n1/5 - Fetching the list of available updates" >> $ulog
-apt-get update >> $ulog
-echo -e "\n2/5 - Strictly upgrading the current packages" >> $ulog
-apt-get upgrade -y >> $ulog
-echo -e "\n3/5 - Installing updates (new ones)" >> $ulog
-apt-get dist-upgrade -y >> $ulog
-echo -e "\n4/5 - Removing packages that were automatically installed to satisfy dependencies for some packages and that are no more needed" >> $ulog
-apt-get autoremove -y >> $ulog
-echo -e "\n5/5 - Clearing out the local repository of retrieved package files. Cache cleaning" >> $ulog
-apt-get autoclean -y >> $ulog
+echo -e "\n1/4 - Fetching the list of available updates" >> $ulog
+apt update >> $ulog
+wait
+echo -e "\n2/4 - Installing updates" >> $ulog
+apt full-upgrade -y >> $ulog
+wait
+echo -e "\n3/4 - Removing packages that were automatically installed to satisfy dependencies for some packages and that are no more needed" >> $ulog
+apt autoremove -y >> $ulog
+wait
+echo -e "\n4/4 - Clearing out the local repository of retrieved package files. Cache cleaning" >> $ulog
+apt autoclean -y >> $ulog
+wait
 ```
 ### Set up root cron jobs ([CronHowTo](https://help.ubuntu.com/community/CronHowto))
 
